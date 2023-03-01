@@ -1,5 +1,16 @@
 rootProject.name = 'TVETestMod'
 
-include("TVETest")
-include("TerminalVelocityEngine2")
+include('TVETest')
+include('TerminalVelocityEngine2')
 project(':TerminalVelocityEngine2').projectDir = file('TVETest/TerminalVelocityEngine2')
+
+include('TVETest.Client')
+project(':TVETest.Client').projectDir = file('TVETest/Client')
+include('TVETest.Common')
+project(':TVETest.Common').projectDir = file('TVETest/Common')
+include('TVETest.Server')
+project(':TVETest.Server').projectDir = file('TVETest/Server')
+
+include 'Common'
+include 'Client'
+include 'Server'
