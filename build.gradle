@@ -39,8 +39,8 @@ repositories {
 
 dependencies {
 
-    runtimeOnly project('TerminalVelocityEngine2')
-    runtimeOnly project('TVETest')
+    implementation project('TerminalVelocityEngine2')
+    implementation project('TVETest')
 
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
 
@@ -66,4 +66,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    destinationDir = file('TVETest/mods')
 }
