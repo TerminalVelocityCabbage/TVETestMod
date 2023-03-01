@@ -1,0 +1,3 @@
+[submodule "TVETest"]
+	path = TVETest
+	url = https://github.com/TerminalVelocityCabbage/TVETest.git

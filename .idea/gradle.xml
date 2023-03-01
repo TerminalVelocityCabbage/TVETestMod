@@ -8,6 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/TVETest" />
+            <option value="$PROJECT_DIR$/TVETest/TerminalVelocityEngine2" />
           </set>
         </option>
       </GradleProjectSettings>

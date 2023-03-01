@@ -1,2 +1,5 @@
 rootProject.name = 'TVETestMod'
 
+include("TVETest")
+include("TerminalVelocityEngine2")
+project(':TerminalVelocityEngine2').projectDir = file('TVETest/TerminalVelocityEngine2')
