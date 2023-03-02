@@ -9,13 +9,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Client" />
-            <option value="$PROJECT_DIR$/Common" />
-            <option value="$PROJECT_DIR$/Server" />
-            <option value="$PROJECT_DIR$/TVETest" />
-            <option value="$PROJECT_DIR$/TVETest/Client" />
-            <option value="$PROJECT_DIR$/TVETest/Common" />
-            <option value="$PROJECT_DIR$/TVETest/Server" />
+            <option value="$PROJECT_DIR$/ModClient" />
+            <option value="$PROJECT_DIR$/ModCommon" />
+            <option value="$PROJECT_DIR$/ModServer" />
+            <option value="$PROJECT_DIR$/TVETest/GameClient" />
+            <option value="$PROJECT_DIR$/TVETest/GameCommon" />
+            <option value="$PROJECT_DIR$/TVETest/GameServer" />
             <option value="$PROJECT_DIR$/TVETest/TerminalVelocityEngine2" />
           </set>
         </option>

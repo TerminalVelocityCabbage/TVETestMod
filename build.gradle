@@ -2,9 +2,35 @@ plugins {
     id 'java'
 }
 
-group 'com.terminalvelocitycabbage.testmod'
-version '1.0-SNAPSHOT'
+configurations {
+    modules
+}
 
-jar {
+apply from: file('TVETest/TerminalVelocityEngine2/gradleScripts/repositories.gradle')
+
+dependencies{
+    modules project(':ModClient')
+    modules project(':ModCommon')
+    modules project(':ModServer')
+}
+
+task packageAll(type: Jar) {
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from {
+        configurations.modules.collect {
+            if (!it.isDirectory() &&
+                (it.name == "ModClient.jar" ||
+                it.name == "ModServer.jar" ||
+                it.name == "ModCommon.jar")) {
+                zipTree(it)
+            }
+        }
+    }
+
     destinationDir = file('TVETest/mods')
 }
+
+group 'com.terminalvelocitycabbage.testmod'
+version '1.0-SNAPSHOT'

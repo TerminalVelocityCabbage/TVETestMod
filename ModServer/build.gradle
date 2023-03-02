@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id 'application'
 }
 
 apply from: file('../TVETest/TerminalVelocityEngine2/gradleScripts/repositories.gradle')
@@ -9,5 +8,7 @@ apply from: file('../TVETest/TerminalVelocityEngine2/gradleScripts/dependenciesC
 
 dependencies {
     implementation project(':TerminalVelocityEngine2')
-    implementation project(':TVETest.Common')
+    implementation project(':GameCommon')
+    implementation project(':GameServer')
+    implementation project(':ModCommon')
 }

@@ -1,21 +1,17 @@
 rootProject.name = 'TVETestMod'
 
-include('TVETest')
-include('TerminalVelocityEngine2')
+include(':ModClient')
+include(':ModCommon')
+include(':ModServer')
+
+include(':TerminalVelocityEngine2')
 project(':TerminalVelocityEngine2').projectDir = file('TVETest/TerminalVelocityEngine2')
 
-include('TVETest.Client')
-project(':TVETest.Client').projectDir = file('TVETest/Client')
-project(':TVETest.Client').name = 'TVETest.Client'
+include(':GameClient')
+project(':GameClient').projectDir = file('TVETest/GameClient')
 
-include('TVETest.Common')
-project(':TVETest.Common').projectDir = file('TVETest/Common')
-project(':TVETest.Common').name = 'TVETest.Common'
+include(':GameCommon')
+project(':GameCommon').projectDir = file('TVETest/GameCommon')
 
-include('TVETest.Server')
-project(':TVETest.Server').projectDir = file('TVETest/Server')
-project(':TVETest.Server').name = 'TVETest.Server'
-
-include 'Common'
-include 'Client'
-include 'Server'
+include(':GameServer')
+project(':GameServer').projectDir = file('TVETest/GameServer')
