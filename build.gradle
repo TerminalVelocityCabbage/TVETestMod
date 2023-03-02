@@ -2,34 +2,53 @@ plugins {
     id 'java'
 }
 
-configurations {
-    modules
-}
-
 apply from: file('TVETest/TerminalVelocityEngine2/gradleScripts/repositories.gradle')
 
-dependencies{
-    modules project(':ModClient')
-    modules project(':ModCommon')
-    modules project(':ModServer')
-}
-
-task packageAll(type: Jar) {
-
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-    from {
-        configurations.modules.collect {
-            if (!it.isDirectory() &&
-                (it.name == "ModClient.jar" ||
-                it.name == "ModServer.jar" ||
-                it.name == "ModCommon.jar")) {
-                zipTree(it)
-            }
+sourceSets {
+    client {
+        java {
+            srcDirs("src/client")
         }
     }
+    server {
+        java {
+            srcDirs("src/server")
+        }
+    }
+    common {
+        java {
+            srcDirs("src/common")
+        }
+    }
+}
 
-    destinationDir = file('TVETest/mods')
+configurations {
+    serverImplementation.extendsFrom(commonImplementation)
+    clientImplementation.extendsFrom(commonImplementation)
+}
+
+dependencies {
+
+    //Client Game Deps
+    clientImplementation project(':GameClient')
+
+    //Server Game Deps
+    serverImplementation project(':GameServer')
+
+    //Common Deps
+    commonImplementation project(':GameCommon')
+}
+
+jar {
+    from sourceSets.client.output
+    from sourceSets.server.output
+    from sourceSets.common.output
+}
+
+tasks.register('devModJar', Jar) {
+    destinationDirectory.set(file("/TVETest/mods"))
+
+    with jar
 }
 
 group 'com.terminalvelocitycabbage.testmod'

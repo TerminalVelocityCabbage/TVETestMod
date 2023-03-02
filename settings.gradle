@@ -1,9 +1,5 @@
 rootProject.name = 'TVETestMod'
 
-include(':ModClient')
-include(':ModCommon')
-include(':ModServer')
-
 include(':TerminalVelocityEngine2')
 project(':TerminalVelocityEngine2').projectDir = file('TVETest/TerminalVelocityEngine2')
 

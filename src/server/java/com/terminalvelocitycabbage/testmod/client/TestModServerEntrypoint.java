@@ -1,13 +1,13 @@
-package com.terminalvelocitycabbage.testmod.server;
+package com.terminalvelocitycabbage.testmod.client;
 
 import com.terminalvelocitycabbage.engine.Entrypoint;
 import com.terminalvelocitycabbage.engine.debug.Log;
 import com.terminalvelocitycabbage.engine.event.HandleEvent;
-import com.terminalvelocitycabbage.engine.mod.Mod;
+import com.terminalvelocitycabbage.engine.mod.ModServerEntrypoint;
 import com.terminalvelocitycabbage.engine.server.ServerBase;
 import com.terminalvelocitycabbage.templates.events.ServerLifecycleEvent;
 
-@Mod
+@ModServerEntrypoint()
 public class TestModServerEntrypoint extends Entrypoint {
 
     public static final String ID = "testmod";

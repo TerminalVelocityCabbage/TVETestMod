@@ -9,9 +9,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/ModClient" />
-            <option value="$PROJECT_DIR$/ModCommon" />
-            <option value="$PROJECT_DIR$/ModServer" />
             <option value="$PROJECT_DIR$/TVETest/GameClient" />
             <option value="$PROJECT_DIR$/TVETest/GameCommon" />
             <option value="$PROJECT_DIR$/TVETest/GameServer" />
