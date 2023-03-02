@@ -1,7 +1,6 @@
-package com.terminalvelocitycabbage.testmod;
+package com.terminalvelocitycabbage.testmod.server;
 
 import com.terminalvelocitycabbage.engine.Entrypoint;
-import com.terminalvelocitycabbage.engine.client.ClientBase;
 import com.terminalvelocitycabbage.engine.debug.Log;
 import com.terminalvelocitycabbage.engine.event.HandleEvent;
 import com.terminalvelocitycabbage.engine.mod.Mod;
@@ -9,13 +8,12 @@ import com.terminalvelocitycabbage.engine.server.ServerBase;
 import com.terminalvelocitycabbage.templates.events.ServerLifecycleEvent;
 
 @Mod
-public class TestMod extends Entrypoint {
+public class TestModServerEntrypoint extends Entrypoint {
 
     public static final String ID = "testmod";
 
-    public TestMod() {
+    public TestModServerEntrypoint() {
         super(ID);
-        ClientBase.getInstance().subscribe(this);
         ServerBase.getInstance().subscribe(this);
     }
 
