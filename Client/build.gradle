@@ -6,6 +6,7 @@ plugins {
 
 apply from: file('../TVETest/TerminalVelocityEngine2/gradleScripts/repositories.gradle')
 apply from: file('../TVETest/TerminalVelocityEngine2/gradleScripts/dependenciesCommon.gradle')
+apply from: file('../TVETest/TerminalVelocityEngine2/gradleScripts/dependenciesClient.gradle')
 
 dependencies {
     implementation project(':TerminalVelocityEngine2')
