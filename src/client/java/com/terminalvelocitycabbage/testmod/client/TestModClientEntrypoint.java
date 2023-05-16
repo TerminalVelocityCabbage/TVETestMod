@@ -6,6 +6,7 @@ import com.terminalvelocitycabbage.engine.debug.Log;
 import com.terminalvelocitycabbage.engine.event.HandleEvent;
 import com.terminalvelocitycabbage.engine.filesystem.ResourceSource;
 import com.terminalvelocitycabbage.engine.filesystem.ResourceType;
+import com.terminalvelocitycabbage.engine.filesystem.resources.Resource;
 import com.terminalvelocitycabbage.engine.filesystem.sources.ModSource;
 import com.terminalvelocitycabbage.engine.mod.ModClientEntrypoint;
 import com.terminalvelocitycabbage.engine.registry.Identifier;
@@ -22,8 +23,8 @@ public class TestModClientEntrypoint extends Entrypoint {
     }
 
     @Override
-    public void init() {
-        Log.info("Mod init");
+    public void preInit() {
+        super.preInit();
 
         //Register and init filesystem things
         //Create resource sources for this client
@@ -40,8 +41,29 @@ public class TestModClientEntrypoint extends Entrypoint {
         ClientBase.getInstance().getFileSystem().registerResourceSource(sourceIdentifier, testModSource);
 
         //Register Resources
-        //TODO add jar resources
         ClientBase.getInstance().getFileSystem().registerResource(sourceIdentifier, ResourceType.DEFAULT_CONFIG, "testmod.toml");
+    }
+
+    @Override
+    public void init() {
+        Log.info("Mod init");
+
+        //Test
+        testFileSystemRegistryStuff();
+    }
+
+    public void testFileSystemRegistryStuff() {
+
+        //List resources which are registered
+        //getFileSystem().listResources();
+
+        //Test reading the string that is the config file
+        Resource resource = ClientBase.getInstance().getFileSystem().getResource(ResourceType.DEFAULT_CONFIG, new Identifier("game", "test.toml"));
+        Log.info(resource.asString());
+
+        //Test reading the string that is the mod config file
+        Resource modResource = ClientBase.getInstance().getFileSystem().getResource(ResourceType.DEFAULT_CONFIG, new Identifier("testmod", "testmod.toml"));
+        Log.info(modResource.asString());
     }
 
     @Override
