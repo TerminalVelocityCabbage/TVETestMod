@@ -4,8 +4,8 @@ import com.terminalvelocitycabbage.engine.Entrypoint;
 import com.terminalvelocitycabbage.engine.client.ClientBase;
 import com.terminalvelocitycabbage.engine.debug.Log;
 import com.terminalvelocitycabbage.engine.event.HandleEvent;
-import com.terminalvelocitycabbage.engine.filesystem.ResourceSource;
-import com.terminalvelocitycabbage.engine.filesystem.ResourceType;
+import com.terminalvelocitycabbage.engine.filesystem.resources.ResourceSource;
+import com.terminalvelocitycabbage.engine.filesystem.resources.ResourceType;
 import com.terminalvelocitycabbage.engine.filesystem.resources.Resource;
 import com.terminalvelocitycabbage.engine.filesystem.sources.ModSource;
 import com.terminalvelocitycabbage.engine.mod.ModClientEntrypoint;
@@ -52,6 +52,7 @@ public class TestModClientEntrypoint extends Entrypoint {
         testFileSystemRegistryStuff();
     }
 
+    //Test that this mod has access to resources from both itself and the client
     public void testFileSystemRegistryStuff() {
 
         //List resources which are registered
