@@ -49,7 +49,7 @@ public class TestModClientEntrypoint extends Entrypoint {
         Log.info("Mod init");
 
         //Test
-        testFileSystemRegistryStuff();
+        //testFileSystemRegistryStuff();
     }
 
     //Test that this mod has access to resources from both itself and the client
