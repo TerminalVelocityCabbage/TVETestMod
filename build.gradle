@@ -31,9 +31,11 @@ dependencies {
 
     //Client Game Deps
     clientImplementation project(':GameClient')
+    clientImplementation sourceSets.common.output
 
     //Server Game Deps
     serverImplementation project(':GameServer')
+    serverImplementation sourceSets.common.output
 
     //Common Deps
     commonImplementation project(':GameCommon')

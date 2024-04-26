@@ -7,10 +7,10 @@ import com.terminalvelocitycabbage.engine.mod.ModServerEntrypoint;
 import com.terminalvelocitycabbage.engine.server.ServerBase;
 import com.terminalvelocitycabbage.templates.events.ServerLifecycleEvent;
 
+import static com.terminalvelocitycabbage.testmod.common.TestMod.ID;
+
 @ModServerEntrypoint()
 public class TestModServerEntrypoint extends Entrypoint {
-
-    public static final String ID = "testmod";
 
     public TestModServerEntrypoint() {
         super(ID);

@@ -12,10 +12,10 @@ import com.terminalvelocitycabbage.engine.mod.ModClientEntrypoint;
 import com.terminalvelocitycabbage.engine.registry.Identifier;
 import com.terminalvelocitycabbage.templates.events.ServerLifecycleEvent;
 
+import static com.terminalvelocitycabbage.testmod.common.TestMod.ID;
+
 @ModClientEntrypoint()
 public class TestModClientEntrypoint extends Entrypoint {
-
-    public static final String ID = "testmod";
 
     public TestModClientEntrypoint() {
         super(ID);
@@ -49,7 +49,7 @@ public class TestModClientEntrypoint extends Entrypoint {
         Log.info("Mod init");
 
         //Test
-        //testFileSystemRegistryStuff();
+        testFileSystemRegistryStuff();
     }
 
     //Test that this mod has access to resources from both itself and the client
