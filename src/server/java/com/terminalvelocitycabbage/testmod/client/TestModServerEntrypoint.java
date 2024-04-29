@@ -13,6 +13,11 @@ public class TestModServerEntrypoint extends Entrypoint {
 
     public TestModServerEntrypoint() {
         super(ID);
+    }
+
+    @Override
+    public void preInit() {
+        super.preInit();
         ServerBase.getInstance().getEventDispatcher().listenToEvent(ServerLifecycleEvent.INIT, (event -> onServerInit((ServerLifecycleEvent) event)));
     }
 
