@@ -1,6 +1,5 @@
 package com.terminalvelocitycabbage.testmod.client;
 
-import com.terminalvelocitycabbage.engine.Entrypoint;
 import com.terminalvelocitycabbage.engine.client.ClientBase;
 import com.terminalvelocitycabbage.engine.debug.Log;
 import com.terminalvelocitycabbage.engine.filesystem.resources.Resource;
@@ -8,14 +7,14 @@ import com.terminalvelocitycabbage.engine.filesystem.resources.ResourceSource;
 import com.terminalvelocitycabbage.engine.filesystem.resources.ResourceType;
 import com.terminalvelocitycabbage.engine.filesystem.sources.ModSource;
 import com.terminalvelocitycabbage.engine.mod.ModClientEntrypoint;
-import com.terminalvelocitycabbage.engine.networking.Side;
+import com.terminalvelocitycabbage.engine.mod.ModEntrypoint;
 import com.terminalvelocitycabbage.engine.registry.Identifier;
 import com.terminalvelocitycabbage.templates.events.ServerLifecycleEvent;
 
 import static com.terminalvelocitycabbage.testmod.common.TestMod.ID;
 
 @ModClientEntrypoint()
-public class TestModClientEntrypoint extends Entrypoint {
+public class TestModClientEntrypoint extends ModEntrypoint {
 
     public TestModClientEntrypoint() {
         super(ID);
@@ -28,10 +27,12 @@ public class TestModClientEntrypoint extends Entrypoint {
         //Register Event Listeners
         ClientBase.getInstance().getEventDispatcher().listenToEvent(ServerLifecycleEvent.STARTED, (event) -> onServerInit((ServerLifecycleEvent) event));
 
+        Log.info(getDependencies());
+
         //Register and init filesystem things
         //Create resource sources for this client
         //TODO make this simpler, should be bale to get a mod source from a this instance
-        ResourceSource testModSource = new ModSource(ID, Side.CLIENT);
+        ResourceSource testModSource = new ModSource(ID, getMod());
         Identifier sourceIdentifier = identifierOf("testMod_jar_resource_source");
         //Define roots for these resources
         testModSource.registerDefaultSourceRoot(ResourceType.MODEL);
