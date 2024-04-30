@@ -1,0 +1,13 @@
+[identity]
+namespace = "testmod"
+name = "Test Mod"
+description = "A test mod to show the features of the TVE modding system & inherent modding api."
+version = "1.0.0-alpha.1"
+
+[authors]
+creators = ["NeusFear"]
+contributors = ["Jaskarth"]
+
+[dependencies]
+required = []
+optional = ["examplemod:1.0.0"]

@@ -1,34 +1,37 @@
 package com.terminalvelocitycabbage.testmod.client;
 
-import com.terminalvelocitycabbage.engine.Entrypoint;
 import com.terminalvelocitycabbage.engine.client.ClientBase;
 import com.terminalvelocitycabbage.engine.debug.Log;
-import com.terminalvelocitycabbage.engine.event.HandleEvent;
+import com.terminalvelocitycabbage.engine.filesystem.resources.Resource;
 import com.terminalvelocitycabbage.engine.filesystem.resources.ResourceSource;
 import com.terminalvelocitycabbage.engine.filesystem.resources.ResourceType;
-import com.terminalvelocitycabbage.engine.filesystem.resources.Resource;
 import com.terminalvelocitycabbage.engine.filesystem.sources.ModSource;
 import com.terminalvelocitycabbage.engine.mod.ModClientEntrypoint;
+import com.terminalvelocitycabbage.engine.mod.ModEntrypoint;
 import com.terminalvelocitycabbage.engine.registry.Identifier;
 import com.terminalvelocitycabbage.templates.events.ServerLifecycleEvent;
 
 import static com.terminalvelocitycabbage.testmod.common.TestMod.ID;
 
 @ModClientEntrypoint()
-public class TestModClientEntrypoint extends Entrypoint {
+public class TestModClientEntrypoint extends ModEntrypoint {
 
     public TestModClientEntrypoint() {
         super(ID);
-        ClientBase.getInstance().subscribe(this);
     }
 
     @Override
     public void preInit() {
         super.preInit();
 
+        //Register Event Listeners
+        ClientBase.getInstance().getEventDispatcher().listenToEvent(ServerLifecycleEvent.STARTED, (event) -> onServerInit((ServerLifecycleEvent) event));
+
+        Log.info(getDependencies());
+
         //Register and init filesystem things
         //Create resource sources for this client
-        ResourceSource testModSource = new ModSource(ID, ClientBase.getInstance().getModManager().getMod(this));
+        ResourceSource testModSource = new ModSource(ID, getMod());
         Identifier sourceIdentifier = identifierOf("testMod_jar_resource_source");
         //Define roots for these resources
         testModSource.registerDefaultSourceRoot(ResourceType.MODEL);
@@ -46,10 +49,10 @@ public class TestModClientEntrypoint extends Entrypoint {
 
     @Override
     public void init() {
-        Log.info("Mod init");
+        Log.info("Mod init: " + getNamespace());
 
         //Test
-        testFileSystemRegistryStuff();
+        //testFileSystemRegistryStuff();
     }
 
     //Test that this mod has access to resources from both itself and the client
@@ -72,7 +75,6 @@ public class TestModClientEntrypoint extends Entrypoint {
         Log.info("Mod Destroy");
     }
 
-    @HandleEvent(eventName = ServerLifecycleEvent.INIT)
     private void onServerInit(ServerLifecycleEvent event) {
         Log.info("Mod heard event " + event.getId() + " from server: " + event.getServer());
     }
