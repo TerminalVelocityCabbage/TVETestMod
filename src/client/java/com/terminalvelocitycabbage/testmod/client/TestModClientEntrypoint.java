@@ -31,7 +31,6 @@ public class TestModClientEntrypoint extends ModEntrypoint {
 
         //Register and init filesystem things
         //Create resource sources for this client
-        //TODO make this simpler, should be bale to get a mod source from a this instance
         ResourceSource testModSource = new ModSource(ID, getMod());
         Identifier sourceIdentifier = identifierOf("testMod_jar_resource_source");
         //Define roots for these resources
