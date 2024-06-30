@@ -27,8 +27,6 @@ public class TestModClientEntrypoint extends ModEntrypoint {
         //Register Event Listeners
         ClientBase.getInstance().getEventDispatcher().listenToEvent(ServerLifecycleEvent.STARTED, (event) -> onServerInit((ServerLifecycleEvent) event));
 
-        Log.info(getDependencies());
-
         //Register and init filesystem things
         //Create resource sources for this client
         ResourceSource testModSource = new ModSource(ID, getMod());
