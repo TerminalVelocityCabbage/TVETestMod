@@ -10,10 +10,9 @@ import com.terminalvelocitycabbage.engine.mod.ModClientEntrypoint;
 import com.terminalvelocitycabbage.engine.mod.ModEntrypoint;
 import com.terminalvelocitycabbage.engine.registry.Identifier;
 import com.terminalvelocitycabbage.engine.translation.Language;
-import com.terminalvelocitycabbage.engine.translation.Localizer;
 import com.terminalvelocitycabbage.game.client.GameClient;
 import com.terminalvelocitycabbage.game.client.registry.GameLocalizedTexts;
-import com.terminalvelocitycabbage.game.common.events.ModLocalizedTextRegistryEvent;
+import com.terminalvelocitycabbage.templates.events.LocalizedTextKeyRegistrationEvent;
 import com.terminalvelocitycabbage.templates.events.ResourceRegistrationEvent;
 import com.terminalvelocitycabbage.templates.events.ResourceSourceRegistrationEvent;
 import com.terminalvelocitycabbage.templates.events.ServerLifecycleEvent;
@@ -34,7 +33,7 @@ public class TestModClientEntrypoint extends ModEntrypoint {
     public void registerEventListeners() {
         //Register Event Listeners
         getEventDispatcher().listenToEvent(ServerLifecycleEvent.STARTED, (event) -> onServerInit((ServerLifecycleEvent) event));
-        getEventDispatcher().listenToEvent(ModLocalizedTextRegistryEvent.EVENT, (event) -> registerLocalizedTexts(((ModLocalizedTextRegistryEvent) event).getLocalizer()));
+        getEventDispatcher().listenToEvent(LocalizedTextKeyRegistrationEvent.EVENT, (event) -> registerLocalizedTexts(((LocalizedTextKeyRegistrationEvent) event)));
         getEventDispatcher().listenToEvent(ResourceSourceRegistrationEvent.EVENT, (event -> registerResourceSources((ResourceSourceRegistrationEvent) event)));
 
         //Register Resources
@@ -53,8 +52,8 @@ public class TestModClientEntrypoint extends ModEntrypoint {
         testModResourceSource = event.getRegistry().register(sourceIdentifier, testModSource).getIdentifier();
     }
 
-    private void registerLocalizedTexts(Localizer localizer) {
-        modLocalizedText = localizer.registerTranslatableText(ID, "modstuff.modtest");
+    private void registerLocalizedTexts(LocalizedTextKeyRegistrationEvent event) {
+        modLocalizedText = event.registerKey(ID, "modstuff.modtest").getIdentifier();
     }
 
     @Override
