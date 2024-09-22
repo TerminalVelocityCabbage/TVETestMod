@@ -10,7 +10,6 @@ import com.terminalvelocitycabbage.engine.mod.ModClientEntrypoint;
 import com.terminalvelocitycabbage.engine.mod.ModEntrypoint;
 import com.terminalvelocitycabbage.engine.registry.Identifier;
 import com.terminalvelocitycabbage.engine.translation.Language;
-import com.terminalvelocitycabbage.game.client.GameClient;
 import com.terminalvelocitycabbage.game.client.registry.GameLocalizedTexts;
 import com.terminalvelocitycabbage.templates.events.LocalizedTextKeyRegistrationEvent;
 import com.terminalvelocitycabbage.templates.events.ResourceRegistrationEvent;
@@ -62,7 +61,7 @@ public class TestModClientEntrypoint extends ModEntrypoint {
 
         //Test
         //testFileSystemRegistryStuff();
-        var localizer = ((GameClient) ClientBase.getInstance()).getLocalizer();
+        var localizer = ClientBase.getInstance().getLocalizer();
         Log.info(localizer.localize(GameLocalizedTexts.HELLO));
         Log.info(localizer.localize(GameLocalizedTexts.GOODBYE));
         Log.info(localizer.localize(GameLocalizedTexts.ANOTHER_TRANSLATION));
