@@ -2,6 +2,7 @@ package com.terminalvelocitycabbage.testmod.client;
 
 import com.terminalvelocitycabbage.engine.client.ClientBase;
 import com.terminalvelocitycabbage.engine.debug.Log;
+import com.terminalvelocitycabbage.engine.filesystem.GameFileSystem;
 import com.terminalvelocitycabbage.engine.filesystem.resources.Resource;
 import com.terminalvelocitycabbage.engine.filesystem.resources.ResourceCategory;
 import com.terminalvelocitycabbage.engine.filesystem.resources.ResourceSource;
@@ -76,17 +77,17 @@ public class TestModClientEntrypoint extends ModEntrypoint {
     }
 
     //Test that this mod has access to resources from both itself and the client
-    public void testFileSystemRegistryStuff() {
+    public void testFileSystemRegistryStuff(GameFileSystem fileSystem) {
 
         //List resources which are registered
         //getFileSystem().listResources();
 
         //Test reading the string that is the config file
-        Resource resource = ClientBase.getInstance().getFileSystem().getResource(ResourceCategory.DEFAULT_CONFIG, new Identifier("game", "test.toml"));
+        Resource resource = fileSystem.getResource(ResourceCategory.DEFAULT_CONFIG, new Identifier("game", "test.toml"));
         Log.info(resource.asString());
 
         //Test reading the string that is the mod config file
-        Resource modResource = ClientBase.getInstance().getFileSystem().getResource(ResourceCategory.DEFAULT_CONFIG, new Identifier("testmod", "testmod.toml"));
+        Resource modResource = fileSystem.getResource(ResourceCategory.DEFAULT_CONFIG, new Identifier("testmod", "testmod.toml"));
         Log.info(modResource.asString());
     }
 
