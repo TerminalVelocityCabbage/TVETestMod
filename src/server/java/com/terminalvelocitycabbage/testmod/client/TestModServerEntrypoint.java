@@ -30,6 +30,6 @@ public class TestModServerEntrypoint extends ModEntrypoint {
     }
 
     private void onServerInit(ServerLifecycleEvent event) {
-        Log.info("Mod heard event " + event.getId() + " from server: " + event.getServer());
+        Log.info("Mod heard event " + event.getIdentifier() + " from server: " + event.getServer());
     }
 }

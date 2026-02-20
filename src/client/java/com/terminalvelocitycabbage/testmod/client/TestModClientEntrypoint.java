@@ -11,6 +11,7 @@ import com.terminalvelocitycabbage.engine.mod.ModClientEntrypoint;
 import com.terminalvelocitycabbage.engine.mod.ModEntrypoint;
 import com.terminalvelocitycabbage.engine.registry.Identifier;
 import com.terminalvelocitycabbage.engine.translation.Language;
+import com.terminalvelocitycabbage.game.client.registry.GameConfigs;
 import com.terminalvelocitycabbage.game.client.registry.GameLocalizedTexts;
 import com.terminalvelocitycabbage.templates.events.LocalizedTextKeyRegistrationEvent;
 import com.terminalvelocitycabbage.templates.events.ResourceRegistrationEvent;
@@ -25,6 +26,8 @@ public class TestModClientEntrypoint extends ModEntrypoint {
     Identifier modLocalizedText;
     Identifier testModResourceSource;
 
+    private static Identifier MOD_CONFIG;
+
     public TestModClientEntrypoint() {
         super(ID);
     }
@@ -37,19 +40,20 @@ public class TestModClientEntrypoint extends ModEntrypoint {
         getEventDispatcher().listenToEvent(ResourceSourceRegistrationEvent.EVENT, (event -> registerResourceSources((ResourceSourceRegistrationEvent) event)));
 
         //Register Resources
-        getEventDispatcher().listenToEvent(ResourceRegistrationEvent.getEventNameFromCategory(ResourceCategory.DEFAULT_CONFIG), event -> ((ResourceRegistrationEvent) event).registerResource(testModResourceSource, ResourceCategory.DEFAULT_CONFIG, "testmod.toml"));
+        getEventDispatcher().listenToEvent(ResourceRegistrationEvent.getEventNameFromCategory(ResourceCategory.DEFAULT_CONFIG), event -> {
+            MOD_CONFIG = ((ResourceRegistrationEvent) event).registerResource(testModResourceSource, ResourceCategory.DEFAULT_CONFIG, "testmod.toml").getIdentifier();
+        });
         getEventDispatcher().listenToEvent(ResourceRegistrationEvent.getEventNameFromCategory(ResourceCategory.LOCALIZATION), event -> ((ResourceRegistrationEvent) event).registerResource(testModResourceSource, ResourceCategory.LOCALIZATION, "en-us.toml"));
     }
 
     private void registerResourceSources(ResourceSourceRegistrationEvent event) {
         //Register and init filesystem things
         //Create resource sources for this client
-        ResourceSource testModSource = new ModSource(ID, getMod());
-        Identifier sourceIdentifier = identifierOf("testMod_jar_resource_source");
+        ResourceSource testModSource = new ModSource(getMod());
         //Define roots for these resources
-        testModSource.registerDefaultSources();
+        testModSource.registerDefaultSources(ID);
         //register this source to the filesystem
-        testModResourceSource = event.getRegistry().register(sourceIdentifier, testModSource).getIdentifier();
+        testModResourceSource = event.registerResourceSource(getNamespace(), "testmod", testModSource);
     }
 
     private void registerLocalizedTexts(LocalizedTextKeyRegistrationEvent event) {
@@ -83,11 +87,11 @@ public class TestModClientEntrypoint extends ModEntrypoint {
         //getFileSystem().listResources();
 
         //Test reading the string that is the config file
-        Resource resource = fileSystem.getResource(ResourceCategory.DEFAULT_CONFIG, new Identifier("game", "test.toml"));
+        Resource resource = fileSystem.getResource(ResourceCategory.DEFAULT_CONFIG, GameConfigs.TEST_TOML_CONFIG);
         Log.info(resource.asString());
 
         //Test reading the string that is the mod config file
-        Resource modResource = fileSystem.getResource(ResourceCategory.DEFAULT_CONFIG, new Identifier("testmod", "testmod.toml"));
+        Resource modResource = fileSystem.getResource(ResourceCategory.DEFAULT_CONFIG, MOD_CONFIG);
         Log.info(modResource.asString());
     }
 
@@ -97,6 +101,6 @@ public class TestModClientEntrypoint extends ModEntrypoint {
     }
 
     private void onServerInit(ServerLifecycleEvent event) {
-        Log.info("Mod heard event " + event.getId() + " from server: " + event.getServer());
+        Log.info("Mod heard event " + event.getIdentifier() + " from server: " + event.getServer());
     }
 }
