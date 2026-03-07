@@ -2,6 +2,7 @@ package com.terminalvelocitycabbage.testmod.client;
 
 import com.terminalvelocitycabbage.engine.client.ClientBase;
 import com.terminalvelocitycabbage.engine.debug.Log;
+import com.terminalvelocitycabbage.engine.event.EventDispatcher;
 import com.terminalvelocitycabbage.engine.filesystem.GameFileSystem;
 import com.terminalvelocitycabbage.engine.filesystem.resources.Resource;
 import com.terminalvelocitycabbage.engine.filesystem.resources.ResourceCategory;
@@ -33,17 +34,17 @@ public class TestModClientEntrypoint extends ModEntrypoint {
     }
 
     @Override
-    public void registerEventListeners() {
+    public void registerEventListeners(EventDispatcher dispatcher) {
         //Register Event Listeners
-        getEventDispatcher().listenToEvent(ServerLifecycleEvent.STARTED, (event) -> onServerInit((ServerLifecycleEvent) event));
-        getEventDispatcher().listenToEvent(LocalizedTextKeyRegistrationEvent.EVENT, (event) -> registerLocalizedTexts(((LocalizedTextKeyRegistrationEvent) event)));
-        getEventDispatcher().listenToEvent(ResourceSourceRegistrationEvent.EVENT, (event -> registerResourceSources((ResourceSourceRegistrationEvent) event)));
+        dispatcher.listenToEvent(ServerLifecycleEvent.STARTED, (event) -> onServerInit((ServerLifecycleEvent) event));
+        dispatcher.listenToEvent(LocalizedTextKeyRegistrationEvent.EVENT, (event) -> registerLocalizedTexts(((LocalizedTextKeyRegistrationEvent) event)));
+        dispatcher.listenToEvent(ResourceSourceRegistrationEvent.EVENT, (event -> registerResourceSources((ResourceSourceRegistrationEvent) event)));
 
         //Register Resources
-        getEventDispatcher().listenToEvent(ResourceRegistrationEvent.getEventNameFromCategory(ResourceCategory.DEFAULT_CONFIG), event -> {
+        dispatcher.listenToEvent(ResourceRegistrationEvent.getEventNameFromCategory(ResourceCategory.DEFAULT_CONFIG), event -> {
             MOD_CONFIG = ((ResourceRegistrationEvent) event).registerResource(testModResourceSource, ResourceCategory.DEFAULT_CONFIG, "testmod.toml").getIdentifier();
         });
-        getEventDispatcher().listenToEvent(ResourceRegistrationEvent.getEventNameFromCategory(ResourceCategory.LOCALIZATION), event -> ((ResourceRegistrationEvent) event).registerResource(testModResourceSource, ResourceCategory.LOCALIZATION, "en-us.toml"));
+        dispatcher.listenToEvent(ResourceRegistrationEvent.getEventNameFromCategory(ResourceCategory.LOCALIZATION), event -> ((ResourceRegistrationEvent) event).registerResource(testModResourceSource, ResourceCategory.LOCALIZATION, "en-us.toml"));
     }
 
     private void registerResourceSources(ResourceSourceRegistrationEvent event) {
