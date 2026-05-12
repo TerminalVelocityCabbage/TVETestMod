@@ -15,7 +15,6 @@ import com.terminalvelocitycabbage.engine.translation.Language;
 import com.terminalvelocitycabbage.game.client.registry.GameConfigs;
 import com.terminalvelocitycabbage.game.client.registry.GameLocalizedTexts;
 import com.terminalvelocitycabbage.templates.events.LocalizedTextKeyRegistrationEvent;
-import com.terminalvelocitycabbage.templates.events.ResourceRegistrationEvent;
 import com.terminalvelocitycabbage.templates.events.ResourceSourceRegistrationEvent;
 import com.terminalvelocitycabbage.templates.events.ServerLifecycleEvent;
 
@@ -27,7 +26,7 @@ public class TestModClientEntrypoint extends ModEntrypoint {
     Identifier modLocalizedText;
     Identifier testModResourceSource;
 
-    private static Identifier MOD_CONFIG;
+    private static final Identifier MOD_CONFIG = ResourceCategory.DEFAULT_CONFIG.identifierOf(ID, "testmod");
 
     public TestModClientEntrypoint() {
         super(ID);
@@ -39,12 +38,6 @@ public class TestModClientEntrypoint extends ModEntrypoint {
         dispatcher.listenToEvent(ServerLifecycleEvent.STARTED, (event) -> onServerInit((ServerLifecycleEvent) event));
         dispatcher.listenToEvent(LocalizedTextKeyRegistrationEvent.EVENT, (event) -> registerLocalizedTexts(((LocalizedTextKeyRegistrationEvent) event)));
         dispatcher.listenToEvent(ResourceSourceRegistrationEvent.EVENT, (event -> registerResourceSources((ResourceSourceRegistrationEvent) event)));
-
-        //Register Resources
-        dispatcher.listenToEvent(ResourceRegistrationEvent.getEventNameFromCategory(ResourceCategory.DEFAULT_CONFIG), event -> {
-            MOD_CONFIG = ((ResourceRegistrationEvent) event).registerResource(testModResourceSource, ResourceCategory.DEFAULT_CONFIG, "testmod.toml").getIdentifier();
-        });
-        dispatcher.listenToEvent(ResourceRegistrationEvent.getEventNameFromCategory(ResourceCategory.LOCALIZATION), event -> ((ResourceRegistrationEvent) event).registerResource(testModResourceSource, ResourceCategory.LOCALIZATION, "en-us.toml"));
     }
 
     private void registerResourceSources(ResourceSourceRegistrationEvent event) {
