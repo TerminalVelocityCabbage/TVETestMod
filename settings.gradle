@@ -11,3 +11,6 @@ project(':GameCommon').projectDir = file('TVETest/GameCommon')
 
 include(':GameServer')
 project(':GameServer').projectDir = file('TVETest/GameServer')
+
+include(':TVEvents')
+project(':TVEvents').projectDir = file('TVETest/TerminalVelocityEngine2/TVEvents')

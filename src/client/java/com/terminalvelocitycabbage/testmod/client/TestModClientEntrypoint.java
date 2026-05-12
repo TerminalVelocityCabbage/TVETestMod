@@ -2,7 +2,7 @@ package com.terminalvelocitycabbage.testmod.client;
 
 import com.terminalvelocitycabbage.engine.client.ClientBase;
 import com.terminalvelocitycabbage.engine.debug.Log;
-import com.terminalvelocitycabbage.engine.event.EventDispatcher;
+import com.terminalvelocitycabbage.tvevents.EventBus;
 import com.terminalvelocitycabbage.engine.filesystem.GameFileSystem;
 import com.terminalvelocitycabbage.engine.filesystem.resources.Resource;
 import com.terminalvelocitycabbage.engine.filesystem.resources.ResourceCategory;
@@ -33,11 +33,13 @@ public class TestModClientEntrypoint extends ModEntrypoint {
     }
 
     @Override
-    public void registerEventListeners(EventDispatcher dispatcher) {
+    public void registerEventListeners(EventBus bus) {
         //Register Event Listeners
-        dispatcher.listenToEvent(ServerLifecycleEvent.STARTED, (event) -> onServerInit((ServerLifecycleEvent) event));
-        dispatcher.listenToEvent(LocalizedTextKeyRegistrationEvent.EVENT, (event) -> registerLocalizedTexts(((LocalizedTextKeyRegistrationEvent) event)));
-        dispatcher.listenToEvent(ResourceSourceRegistrationEvent.EVENT, (event -> registerResourceSources((ResourceSourceRegistrationEvent) event)));
+        bus.subscribe(ServerLifecycleEvent.class).handle(event -> {
+            if (event.getIdentifier().equals(ServerLifecycleEvent.STARTED)) onServerInit(event);
+        });
+        bus.subscribe(LocalizedTextKeyRegistrationEvent.class).handle(this::registerLocalizedTexts);
+        bus.subscribe(ResourceSourceRegistrationEvent.class).handle(this::registerResourceSources);
     }
 
     private void registerResourceSources(ResourceSourceRegistrationEvent event) {
